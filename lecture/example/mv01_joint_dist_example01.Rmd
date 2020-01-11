@@ -58,18 +58,31 @@ give a vector or a matrix of counts; in the latter case, the columns are interpr
 prop.table(mytable)
 ```
 
+# Visualization of Joint Distributions
+
+## Vsiualization in 3D
+
+```{r}
+# Install the package if you have not done so
+# install.packages("plot3D")
+library(plot3D)
+```
+
+```{r}
+hist3D(z=mytable, border="black", space = .8)
+```
 
 
-# Visualization and Mosaic Plot 
+## Visualization in 2D and Mosaic Plot 
 
 We now use **Mosaic plot ** to visualize the joint distribution. To use the command for this purpose, we need to install the `vcd` package. 
 
 ```{r}
 # Install the necessary packages first
-install.packages("vcd")
+# install.packages("vcd")
 ```
 
-## Equal Probability
+### Equal Probability
 
 Lets visualize the joint distribution with **equal probability** for each pair of $x$ and $y$ values.
 
@@ -80,7 +93,7 @@ mosaic(mytable, shade=TRUE, legend=TRUE)
 ```
 
 
-## Unequal Probability
+### Unequal Probability
 
 Lets simulate a case where the probabilities are unequally distributed over the space of the pairs of $x$ and $y$ values.
 
@@ -124,11 +137,55 @@ What do we learn here? We learn two things (which combination is more likely):
 1. $X = 1;Y = 0$ is most likely, while $X = 0;Y = 0$ least likely
 2. We will use this to examine the conditional probability (defined later) as well.
 
+## Visualization in 2D and Contour Plot
+
+```{r message=FALSE}
+#install.packages("plotly")
+library(plotly)
+```
+
+
+```{r}
+plot_ly(x = data$x, y = data$y, type = "histogram2dcontour")
+```
+
+
 # Joint Distribution to Marginal Distribution
 
 ```{r}
 prop.table(mytable)
 addmargins(prop.table(mytable))
 ```
+
+# Joint Distribution for Continuous Variables
+
+```{r message=FALSE}
+# install.packages("bivariate")
+library(bivariate)
+```
+
+
+```{r}
+# Simulate data from multivariate normal
+set.seed(123456)
+data <-  MASS::mvrnorm(n = 50, 
+                mu = c(1, 5),
+                Sigma = matrix(c(1, 0.5, 0.5, 1), nrow = 2),
+                empirical = TRUE)
+colnames(data) <- c("x", "y")
+data <- as.data.frame(data)
+
+
+
+```
+
+
+
+```{r}
+# Calculate nonparametric joint density (bandwidths)
+f <- kbvpdf (data$x, data$y, 0.7, 7)
+plot (f, TRUE, xlab="x", ylab="y")
+```
+
 
 
