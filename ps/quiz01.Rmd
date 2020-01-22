@@ -1,0 +1,71 @@
+---
+title: "Quiz 1"
+author: "Your name here"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. True or False. Let $p(x_{i},y_{j})$ be the joint probability mass function, $i=1\dots n;j=1\dots m$. It follows that $\sum_{i=1}^{n}\sum_{j=1}^{m}p(x_{i},y_{j})=1$. 
+
+**Answer:**
+
+
+2. The following table display the joint probability distribution for $(x_{i},y_{j})$ where $x$ indicates whether or not someone participated in the job training program, and $y$ whether or not someone is currently unemployed. 
+
+|                            |     |     |      | 
+|----------------------------|-----|-----|------| 
+| Job Training\\Unemployment | 0   | 1   | p(x) | 
+| 0                          | 0.2 | 0.4 |      | 
+| 1                          | 0.2 | 0.2 |      | 
+| p(y)                       |     |     |      | 
+
+
+  a. Calculate the cumulative distribution function: $F(1,0)=$
+  b. Calculate the marginal distribution for both $Y$ and $X$, in other words, how many people are currently unemployed or employed; and how many people participated in the job training program, and how many did not. And fill in the cells in Table (1). 
+  c. Are $X$ and $Y$ independent of each other? Suppose that this is the true joint distribution, not an estimated one, so you do not have to worry about sampling errors. 
+  
+
+3. Use the following data to study the joint distribution in `R`. 
+
+```{r}
+set.seed(123456)
+x<-sample(0:1,1000, replace = T, prob=c(.4,.6)) 
+data<-data.frame(x, y=NA)
+data$y[data$x == 1] <- sample(0:1, sum(data$x == 1), replace = T, prob=c(0.1,0.9)) 
+data$y[data$x == 0] <- sample(0:1, sum(data$x == 0), replace = T, prob=c(0.2,0.8)) 
+```
+
+  a. Calculate the joint pmf using `xtabs()` command (otherwise the `mosaic()` below may give an error message). 
+  
+```{r}
+
+```
+
+  b. Calculate the marginal distribution for both $x$ and $y$ in `R`
+  
+```{r}
+
+```
+
+  c. Plot a 3-D histogram of the joint distribution
+  
+```{r}
+
+```
+
+  d. Plot a 2-D mosaic plot of the joint distribution
+  
+```{r error=FALSE, message=FALSE}
+
+```
+
+
+  e. Looking at these plots, can $X$ and $Y$ be independent?
+  
+  **Answer:**
+
+
+
