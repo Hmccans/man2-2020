@@ -15,11 +15,15 @@
     1. Portfolio Diversification
     2. Optimal Forecast Combination
 
-3. Distribution of Correlation and Tests of Zero Correation
+3. Unsupervised Learning: Principal Component Analysis and Covariance
+
+4. Distribution of Correlation and Tests of Zero Correation
 
     1. Distribution of Correlation
     2. Test statistic
     3. Correlation and Independence
+    
+    
     
     
 ## Reading and Useful Resources
@@ -28,3 +32,6 @@
 
 1. Slides: [here](../lecture/mv02_association.pdf)
 2. Download R Examples: [here](../lecture/example/mv02_association_example01.R)
+3. Slides on Pincipal Component Analysis: [here](../lecture/mv02_association_PCA.pdf)
+4. Download R Examples on PCA: [here](../lecture/example/mv02_association_PCA_example.Rmd)
+
