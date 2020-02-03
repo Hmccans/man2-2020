@@ -35,4 +35,5 @@
 3. Slides on Pincipal Component Analysis: [here](../lecture/mv02_association_PCA.pdf)
 4. Download R Examples on PCA: [here](../lecture/example/mv02_association_PCA_example.Rmd)
 5. Data for PCA [here](../lecture/example/us.bis.yield.rda)
+6. Teapot Data for PCA [here](../lecture/example/teapot.csv)
 
