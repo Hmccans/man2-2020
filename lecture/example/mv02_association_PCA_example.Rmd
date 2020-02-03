@@ -51,6 +51,7 @@ Note that in `R`, the eigenvalues are always returned in decreasing order, and e
 ```{r}
 V <- eigen$vectors
 d <- eigen$values
+d
 ```
 
 Note that eigenvectors and eigevalues toegether can back out original variance covariance matrix using the formula
