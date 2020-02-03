@@ -1,0 +1,54 @@
+---
+title: "Quiz 2"
+author: "Your name here"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Write out the following covariance equation as a function of individual variances of $X$ and Yand their covariance. 
+
+$$
+Var(aX+bY+c)=
+$$
+
+
+2. True or False. No correlation implies that two variables are not depedent. 
+
+**Answer:**
+
+3. Conduct a test of correlation using the following data. Is there any statistically significant correlation between two variables?
+
+```{r echo=FALSE}
+set.seed(123456)
+x <- rnorm(100)
+y <- rnorm(100)
+```
+
+```{r}
+# Conduct test here
+
+```
+
+**Answer:**
+
+
+4. Multiple Choice (choose the best answer): If you have two stocks with identical risks (same variances) and invest the same amount of money in each stock, the risk is minimize when these two stocks are
+
+(a) uncorrelated
+(b) positively correlated
+(c) negatively correlated
+(d) all of above
+
+**Answer:**
+
+5. What is an unbiased forecast? 
+
+**Answer:**
+
+6. True or False. The combination of two unbiased forecasts is still an unbiased forecast.
+
+**Answer:**
+
