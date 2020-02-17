@@ -1,0 +1,94 @@
+---
+title: "Quiz 3"
+author: "Your name here"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+library(tidyverse)
+```
+
+
+Suppose that we have a hypothetical dataset as in the following table [imagine that we have already sorted it in some way]. Answer the following questions.
+
+|   |   |   | 
+|---|---|---| 
+| Y | X | Z | 
+|   |   |   | 
+| 1 | 1 | 1 | 
+| 1 | 1 | 1 | 
+| 0 | 1 | 1 | 
+| 0 | 1 | 0 | 
+| 1 | 2 | 0 | 
+| 0 | 2 | 0 | 
+| 1 | 2 | 0 | 
+| 0 | 2 | 1 | 
+| 0 | 3 | 1 | 
+| 0 | 3 | 1 | 
+| 1 | 3 | 0 | 
+| 0 | 3 | 0 | 
+
+```{r}
+data <- tribble(
+  ~Y,~X,~Z,
+  1,1,1,
+  1,1,1,
+  0,1,1,
+  0,1,0,
+  1,2,0,
+  0,2,0,
+  1,2,0,
+  0,2,1,
+  0,3,1,
+  0,3,1,
+  1,3,0,
+  0,3,0,  
+)
+```
+
+
+Lets follow the three topics that we learned in the past couple lectures. 
+
+1. Figure out the **conditional distribution** of $Y$ given the predictors
+2. Figure out what your predition of $Y$ will be given a value of your predictors based on a particular classifer, here **Bayes Classifier**.  
+3. Why does your classifier would work? Figure out the mathematical justification behind this approach. 
+
+## Conditional Distribution
+
+1. What are the possible values for $Y$ here?
+
+**Answer:** 
+
+2. What is the conditional distribution of $Y$ given $X = 3$? In other words, what is the probability for every possible value of $Y$ for the subgroup with $X = 3$?
+
+**Answer:** 
+
+3. Lets verify your results not only for $X =3$, but for every subgroup using `prop.table()` with `margins` option.
+
+```{r}
+
+```
+
+
+## Bayes Classifier
+
+4. Based on your results above, what is your prediction of $Y$ if $X = 3$?
+
+**Answer:** 
+
+5. Based on your results above, what is your prediction of $Y$ if $X = 1$?
+
+**Answer:** 
+
+## Why use Bayes Classifier?
+
+6. For $X = 3$, if you use $Y = 0$ as your prediction, what is the chance that you will make an error?
+
+**Answer:** 
+
+7. For $X = 3$, if you use $Y = 1$ as your prediction, what is the chance that you will make an error?
+
+**Answer:** 
+
+
