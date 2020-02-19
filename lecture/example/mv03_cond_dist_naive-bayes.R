@@ -58,4 +58,6 @@ str(newdata)
 # Predict Thursday's 9am location
 predict(model, newdata = newdata)
 
+newdata <- data.frame(student = c("Yes", "Yes", "No", "Yes"))
+
 

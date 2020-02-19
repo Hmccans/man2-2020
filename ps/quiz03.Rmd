@@ -64,10 +64,10 @@ Lets follow the three topics that we learned in the past couple lectures.
 
 **Answer:** 
 
-3. Lets verify your results not only for $X =3$, but for every subgroup using `prop.table()` with `margins` option.
+3. Lets verify your results not only for $X =3$, but for every subgroup using `prop.table()` with `margin` option.
 
 ```{r}
-
+prop.table(table(data$X,data$Y), margin = 1)
 ```
 
 

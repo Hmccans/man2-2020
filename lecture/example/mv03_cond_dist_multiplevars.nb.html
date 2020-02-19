@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -1698,7 +1699,6 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -1756,7 +1756,7 @@ summary {
 <p>Let’s read our data into <code>R</code> first. You need to create a folder called <code>data</code> and save the files into this folder. Make sure your program is in the same folder as the data folder.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY25hbWVzPC1yZWFkLmNzdihcImRhdGEvY25hbWVzLmNzdlwiKSBcbkZMdm90ZXJzPC1yZWFkLmNzdihcImRhdGEvRkx2b3RlcnMuY3N2XCIpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjpbImNuYW1lczwtcmVhZC5jc3YoXCJkYXRhL2NuYW1lcy5jc3ZcIikgIiwiRkx2b3RlcnM8LXJlYWQuY3N2KFwiZGF0YS9GTHZvdGVycy5jc3ZcIikiXX0= -->
 <pre class="r"><code>cnames&lt;-read.csv(&quot;data/cnames.csv&quot;) 
 FLvoters&lt;-read.csv(&quot;data/FLvoters.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
@@ -1765,7 +1765,7 @@ FLvoters&lt;-read.csv(&quot;data/FLvoters.csv&quot;)</code></pre>
 <p>Let’s omit the missing values in the dataset</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuRkx2b3RlcnMgPC0gbmEub21pdChGTHZvdGVycylcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiRkx2b3RlcnMgPC0gbmEub21pdChGTHZvdGVycykifQ== -->
 <pre class="r"><code>FLvoters &lt;- na.omit(FLvoters)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1773,7 +1773,7 @@ FLvoters&lt;-read.csv(&quot;data/FLvoters.csv&quot;)</code></pre>
 <p>Let’s examine the dataset</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyKEZMdm90ZXJzKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoic3RyKEZMdm90ZXJzKSJ9 -->
 <pre class="r"><code>str(FLvoters)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1781,7 +1781,7 @@ FLvoters&lt;-read.csv(&quot;data/FLvoters.csv&quot;)</code></pre>
 <p>As we can see, <code>age</code> is a continuous variable. Let’s discretize it first so that we can directly apply our formula.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuRkx2b3RlcnMkYWdlLmdyb3VwPC0gTkFcbkZMdm90ZXJzJGFnZS5ncm91cFtGTHZvdGVycyRhZ2UgPD0gMjBdIDwtIDFcbkZMdm90ZXJzJGFnZS5ncm91cFtGTHZvdGVycyRhZ2UgPiAyMCAmIEZMdm90ZXJzJGFnZSA8PSA0MF0gPC0gMlxuRkx2b3RlcnMkYWdlLmdyb3VwW0ZMdm90ZXJzJGFnZSA+IDQwICYgRkx2b3RlcnMkYWdlIDw9IDYwXSA8LSAzXG5GTHZvdGVycyRhZ2UuZ3JvdXBbRkx2b3RlcnMkYWdlID42MF0gPC0gNFxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjpbIkZMdm90ZXJzJGFnZS5ncm91cDwtIE5BIiwiRkx2b3RlcnMkYWdlLmdyb3VwW0ZMdm90ZXJzJGFnZSA8PSAyMF0gPC0gMSIsIkZMdm90ZXJzJGFnZS5ncm91cFtGTHZvdGVycyRhZ2UgPiAyMCAmIEZMdm90ZXJzJGFnZSA8PSA0MF0gPC0gMiIsIkZMdm90ZXJzJGFnZS5ncm91cFtGTHZvdGVycyRhZ2UgPiA0MCAmIEZMdm90ZXJzJGFnZSA8PSA2MF0gPC0gMyIsIkZMdm90ZXJzJGFnZS5ncm91cFtGTHZvdGVycyRhZ2UgPjYwXSA8LSA0Il19 -->
 <pre class="r"><code>FLvoters$age.group&lt;- NA
 FLvoters$age.group[FLvoters$age &lt;= 20] &lt;- 1
 FLvoters$age.group[FLvoters$age &gt; 20 &amp; FLvoters$age &lt;= 40] &lt;- 2
@@ -1793,7 +1793,7 @@ FLvoters$age.group[FLvoters$age &gt;60] &lt;- 4</code></pre>
 <p>Or, you can use the tidy approach:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5GTHZvdGVycyA8LSBGTHZvdGVycyAlPiUgXG4gIG11dGF0ZShcbiAgICBhZ2UuZ3JvdXAyID0gY2FzZV93aGVuKFxuICAgICAgYWdlIDw9IDIwIH4gMSxcbiAgICAgIGFnZSA+MjAgJiBhZ2U8PTQwICB+IDIsXG4gICAgICBhZ2UgPjQwICYgYWdlPD02MCAgfiAzLFxuICAgICAgYWdlPjYwIH4gNFxuICAgIClcbiAgKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjpbImxpYnJhcnkodGlkeXZlcnNlKSIsIkZMdm90ZXJzIDwtIEZMdm90ZXJzICU+JSAiLCIgIG11dGF0ZSgiLCIgICAgYWdlLmdyb3VwMiA9IGNhc2Vfd2hlbigiLCIgICAgICBhZ2UgPD0gMjAgfiAxLCIsIiAgICAgIGFnZSA+MjAgJiBhZ2U8PTQwICB+IDIsIiwiICAgICAgYWdlID40MCAmIGFnZTw9NjAgIH4gMywiLCIgICAgICBhZ2U+NjAgfiA0IiwiICAgICkiLCIgICkiXX0= -->
 <pre class="r"><code>library(tidyverse)
 FLvoters &lt;- FLvoters %&gt;% 
   mutate(
@@ -1810,14 +1810,14 @@ FLvoters &lt;- FLvoters %&gt;%
 <p>Lets check if these two approaches are equilvalent.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUoRkx2b3RlcnMkYWdlLmdyb3VwMiwgRkx2b3RlcnMkYWdlLmdyb3VwKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoidGFibGUoRkx2b3RlcnMkYWdlLmdyb3VwMiwgRkx2b3RlcnMkYWdlLmdyb3VwKSJ9 -->
 <pre class="r"><code>table(FLvoters$age.group2, FLvoters$age.group)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShGTHZvdGVycylcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoic3VtbWFyeShGTHZvdGVycykifQ== -->
 <pre class="r"><code>summary(FLvoters)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1825,7 +1825,7 @@ FLvoters &lt;- FLvoters %&gt;%
 <p>Now all the variables of interest are discrete. The process is exactly the same. Just now, we need to put three variables in our <code>table()</code> command and compute the joint distribution of all three.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXl0YWJsZTwtdGFibGUocmFjZT1GTHZvdGVycyRyYWNlLFxuICAgICAgICAgICAgICAgYWdlLmdyb3VwPUZMdm90ZXJzJGFnZS5ncm91cCwgXG4gICAgICAgICAgICAgICBnZW5kZXI9Rkx2b3RlcnMkZ2VuZGVyKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjpbIm15dGFibGU8LXRhYmxlKHJhY2U9Rkx2b3RlcnMkcmFjZSwiLCIgICAgICAgICAgICAgICBhZ2UuZ3JvdXA9Rkx2b3RlcnMkYWdlLmdyb3VwLCAiLCIgICAgICAgICAgICAgICBnZW5kZXI9Rkx2b3RlcnMkZ2VuZGVyKSJdfQ== -->
 <pre class="r"><code>mytable&lt;-table(race=FLvoters$race,
                age.group=FLvoters$age.group, 
                gender=FLvoters$gender)</code></pre>
@@ -1834,7 +1834,7 @@ FLvoters &lt;- FLvoters %&gt;%
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuam9pbnQuZGlzdCA8LSBwcm9wLnRhYmxlKG15dGFibGUpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiam9pbnQuZGlzdCA8LSBwcm9wLnRhYmxlKG15dGFibGUpIn0= -->
 <pre class="r"><code>joint.dist &lt;- prop.table(mytable)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1842,7 +1842,7 @@ FLvoters &lt;- FLvoters %&gt;%
 <p>The joint distribution is inevitably more complicated</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuam9pbnQuZGlzdFxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiam9pbnQuZGlzdCJ9 -->
 <pre class="r"><code>joint.dist</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1853,7 +1853,7 @@ FLvoters &lt;- FLvoters %&gt;%
 <p>!!!!</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWRkbWFyZ2lucyhqb2ludC5kaXN0KVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYWRkbWFyZ2lucyhqb2ludC5kaXN0KSJ9 -->
 <pre class="r"><code>addmargins(joint.dist)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1861,7 +1861,7 @@ FLvoters &lt;- FLvoters %&gt;%
 <p>Why? Because it calculates the marginal distribution for each sub-table as well.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFyZ2luLmRpc3QuYWdlIDwtIHByb3AudGFibGUodGFibGUoRkx2b3RlcnMkYWdlLmdyb3VwKSlcbm1hcmdpbi5kaXN0LmFnZVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjpbIm1hcmdpbi5kaXN0LmFnZSA8LSBwcm9wLnRhYmxlKHRhYmxlKEZMdm90ZXJzJGFnZS5ncm91cCkpIiwibWFyZ2luLmRpc3QuYWdlIl19 -->
 <pre class="r"><code>margin.dist.age &lt;- prop.table(table(FLvoters$age.group))
 margin.dist.age</code></pre>
 <!-- rnb-source-end -->
@@ -1876,7 +1876,7 @@ margin.dist.age</code></pre>
 \]</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuam9pbnQuZGlzdFtcImJsYWNrXCIsNCxcImZcIl0vbWFyZ2luLmRpc3QuYWdlWzRdXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiam9pbnQuZGlzdFtcImJsYWNrXCIsNCxcImZcIl0vbWFyZ2luLmRpc3QuYWdlWzRdIn0= -->
 <pre class="r"><code>joint.dist[&quot;black&quot;,4,&quot;f&quot;]/margin.dist.age[4]</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1889,7 +1889,7 @@ margin.dist.age</code></pre>
 \]</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuam9pbnQuZGlzdFssNCxdL21hcmdpbi5kaXN0LmFnZVs0XVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiam9pbnQuZGlzdFssNCxdL21hcmdpbi5kaXN0LmFnZVs0XSJ9 -->
 <pre class="r"><code>joint.dist[,4,]/margin.dist.age[4]</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
