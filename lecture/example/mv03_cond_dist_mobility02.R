@@ -1,6 +1,7 @@
 # This program illustrates how we actually obtain the transition matrix
 
 library(MASS)
+library(tidyverse)
 library(dplyr)
 library(tidytext)
 library(janeaustenr)
