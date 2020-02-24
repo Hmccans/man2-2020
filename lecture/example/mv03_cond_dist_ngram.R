@@ -5,12 +5,17 @@
 # This program is adapted from Text Mining with R (Silge and Robinson)
 # available here at https://www.tidytextmining.com/ngrams.html
 
+library(tidyverse)
 library(dplyr)
 library(tidytext)
 library(janeaustenr)
 library(ggplot2)
 library(tidyr)
 
+
+# How many books of Jane Austen (a game theorist) have we downloaded?
+# https://www.amazon.com/Jane-Austen-Game-Theorist-Updated/dp/0691162441/ref=sr_1_1?crid=IOOIDPEHFHMM&keywords=jane+austen+game+theorist&qid=1582509509&sprefix=Jane+austen+game+the%2Caps%2C182&sr=8-1
+  table(austen_books()$'book')
 
 # We will examine pairs of two consecutive words, called "bigrams"
 # tokenize the "text" variable with bigram, and save this information
@@ -27,7 +32,7 @@ library(tidyr)
     count(bigram, sort = TRUE)
 
 # Now let's treat each word as X and Y
-# The first word as X and the second as Y
+# The first word as X (predictor) and the second as Y (outcome)
 
   
   bigrams_separated <- austen_bigrams %>%
@@ -52,16 +57,35 @@ library(tidyr)
 
   bigrams_united <- bigrams_filtered %>%
     unite(bigram, word1, word2, sep = " ")
+    #    ~~~~~~~
+    # word1 + word2 ==> bigram
   
   bigrams_united
   
   # Let's calculate the frequency for each pair of words
+  
+  # traiditional way, but immediately difficult to read
+  prop.table(table(bigrams_united$bigram))['sir thomas']
+  
+  # tidy approach; generate a data frame (tibble) more readable. 
+  joint.dist<-bigrams_united %>% 
+    count(bigram, sort = TRUE) 
+  
+  joint.dist
   
   joint.dist<-bigrams_united %>% 
     count(bigram, sort = TRUE) %>% 
       mutate(
         freq = n/sum(n)
       )
+  
+  ######################
+  # We will use this approach again below
+  # Note the variable "n"
+  ######################
+  
+  
+  prop.table(table(bigrams_united$bigram))['sir thomas']
   
   # We can visualize the joint distribution (just treating two words as one compound word!) as we did last semester
   
@@ -101,9 +125,11 @@ library(tidyr)
     
     # split the sentence
     s.split <- strsplit(s.lower, " ")
-  
+    s.split
+    
     # unlist it so that it is a vector
     s.split <- unlist(s.split)
+    s.split
   
     # Write a function that repeats the evaluation for us
     # and apply it to every word in the vector
@@ -113,9 +139,12 @@ library(tidyr)
       
         }
     )
+    
+    select
   
     # unlist the list so that it is a logical vector
     select <- unlist(select)
+    select
   
     # select out the words
     s.split[select!="TRUE"]
@@ -129,7 +158,7 @@ library(tidyr)
       )    
     
   
-    # note uwing the code, the count variable
+    # note with the code, the count variable
     # is renamed to nn
     bigram_counts %>%
       filter(word1 == "family") %>%
