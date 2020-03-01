@@ -149,38 +149,18 @@ library(tidyr)
     # select out the words
     s.split[select!="TRUE"]
 
-    # The following code won't work    
-    bigram_counts %>%
-      filter(word1 == "family") %>%
-      count(word2, sort = TRUE) %>%
-      mutate( 
-        freq = n/sum(n)
-      )    
-    
-  
-    # note with the code, the count variable
-    # is renamed to nn
-    bigram_counts %>%
-      filter(word1 == "family") %>%
-      count(word2, sort = TRUE)
-        
-    bigram_counts %>%
-      filter(word1 == "family") %>%
-      count(word2, sort = TRUE) %>%
-      mutate( 
-        freq = nn/sum(nn)
-      )    %>%
-      filter(word2 == "dashwood")
-  
-  
-    # Correct way
+
+    # We cannot calculate family dashwood since all the stop words were excluded
+    # we do not have words called family dashwood in our data
+    # To show the idea
+    # Correct way to obtain pr[party | family]
     bigrams_filtered %>%
       filter(word1 == "family") %>%
       count(word2, sort = TRUE) %>%
       mutate( 
         freq = n/sum(n)
       )    %>%
-      filter(word2 == "dashwood")  
+      filter(word2 == "party")  
   
 # Suppose that you are interested in predicting a word coming after sir
 # You just need to use Bayes classifier with the next word being Y
