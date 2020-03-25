@@ -3,7 +3,7 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-
+We will combine information from Census Name data `cnames` and Florida Census data `FLcensus` to predict ethnic outcomes for the Florida voters data, in which we already have information on individual self-reported (true) outcome to evaluate our accuracy. 
 
 ## Step 1. First look at the Florida data
 
@@ -35,12 +35,24 @@ head(cnames)
 head(FLcensus)
 ```
 
+**Question:** What information do we have in each dataset?
+
+$$
+\begin{aligned}
+& \Pr[\text{Race} \mid \text{Surname}] \\
+& \Pr[\text{Surname} \mid \text{Race}] \\
+& \Pr[\text{Race} \mid \text{Surname, Residence}] \\
+& \Pr[\text{Race} \mid \text{Residence}] \\
+\end{aligned}
+$$
 
 ## Step 2. Clean up the data a bit
 
 ### Preliminary: Matching Data
 
-Let's learn how to select data using `match()`
+We will drop those data points that are NOT matched to the census names. 
+
+**Approach #1:** Let's learn how to select data using `match()`
 
 ```{r}
 x<-c("blue","white","red")
@@ -60,7 +72,7 @@ If I would like to select only x values matched to y, then I will use the follow
 x[!is.na(match(x,y))]
 ```
 
-
+**Approach #2: Tidy Approach**
 
 ```{r}
 library(dplyr)
@@ -75,10 +87,13 @@ x %>%
 
 Keep only those surnames that can be matched to the Census Data
 
+**Approach #1**
+
 ```{r}
 FLvoters <- FLvoters[!is.na(match(FLvoters$surname,cnames$surname)),]
 ```
 
+**Approach #2**
 
 ```{r}
 FLvoters <- FLvoters %>% 
@@ -172,7 +187,7 @@ cnames[w.indx, vars]
 ```{r}
 
 
-#Calculate the maximu and compare it to the cond prob of being
+#Calculate the maximum and compare it to the cond prob of being
 # whites
 
 #apply(cnames[w.indx, vars], 1, max)

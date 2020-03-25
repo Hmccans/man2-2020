@@ -57,6 +57,8 @@ In all departments but C and E (which are near equal), a greater proportion of f
 
 ## R Markdown
 
+Lets obtain a test of **unconditional independence**. First, lets obtain **joint distribution** (frequency counts)
+
 ```{r}
 berkeley <- as.data.frame(UCBAdmissions)
 freq <- berkeley %>% 
@@ -71,10 +73,13 @@ prop.table(mytable)
 
 ```
 
+Second, we will perform the $\chi^2$ test of independence described before. 
+
 ```{r}
 chisq.test(mytable)
 ```
 
+Next, lets perform a test of **conditional independence**. Since we have data in the form of joint distribution already, where the extra dimension `department` is introduced, we are ready to directly perform the test on the obtained joint distribution. 
 
 ```{r}
 mantelhaen.test(UCBAdmissions)
