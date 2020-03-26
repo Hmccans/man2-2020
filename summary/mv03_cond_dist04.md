@@ -21,9 +21,12 @@
 ### Required Readings
 
 1. Slides: [here](../lecture/mv03_cond_dist04.pdf)
-2. [R Example: Berkeley Admission Data](../lecture/example/mv05_cond_indep00_berkeley.Rmd)
-3. [R Example: Test of Conditional Independence and Naive Bayes Classifier](../lecture/example/mv05_cond_indep01.R)
-4. [R Example: Tutorials on Bayes and Naive Bayes Classifiers](../lecture/example/mv03_cond_dist04_tutorial_on_naive-bayes.pdf)
-5. [R Example: Predicting Unobservable Ethnicity](../lecture/example/mv05_cond_indep02.Rmd)
-6. [R Example: Apply Function](../lecture/example/mv05_cond_indep03_apply.Rmd)
+2. Slides: [Tutorials on Bayes and Naive Bayes Classifiers](../lecture/mv03_cond_dist04_tutorial_on_naive-bayes.pdf)
+
+### R code
+
+1. [R Example: Berkeley Admission Data](../lecture/example/mv05_cond_indep00_berkeley.Rmd)
+2. [R Example: Test of Conditional Independence and Naive Bayes Classifier](../lecture/example/mv05_cond_indep01.R)
+3. [R Example: Predicting Unobservable Ethnicity](../lecture/example/mv05_cond_indep02.Rmd)
+4. [R Example: Apply Function](../lecture/example/mv05_cond_indep03_apply.Rmd)
 
