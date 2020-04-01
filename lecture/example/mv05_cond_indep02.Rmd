@@ -1,6 +1,8 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 We will combine information from Census Name data `cnames` and Florida Census data `FLcensus` to predict ethnic outcomes for the Florida voters data, in which we already have information on individual self-reported (true) outcome to evaluate our accuracy. 
@@ -69,6 +71,11 @@ If I would like to select only x values matched to y, then I will use the follow
 
 ```{r}
 !is.na(match(x,y))
+
+```
+
+
+```{r}
 x[!is.na(match(x,y))]
 ```
 
@@ -143,6 +150,12 @@ For example, the first person is PIEDRA, and this surname appears as the $8610^{
 
 ```{r}
 head(cnames)
+```
+
+
+```{r}
+head(whites)
+
 ```
 
 
