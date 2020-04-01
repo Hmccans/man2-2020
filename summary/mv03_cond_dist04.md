@@ -28,5 +28,6 @@
 1. [R Example: Berkeley Admission Data](../lecture/example/mv05_cond_indep00_berkeley.Rmd)
 2. [R Example: Test of Conditional Independence and Naive Bayes Classifier](../lecture/example/mv05_cond_indep01.R)
 3. [R Example: Predicting Unobservable Ethnicity](../lecture/example/mv05_cond_indep02.Rmd)
-4. [R Example: Apply Function](../lecture/example/mv05_cond_indep03_apply.Rmd)
+4. [R Example: Predicting Unobservable Ethnicity](../lecture/example/mv05_cond_indep02_detailed_example.Rmd)
+5. [R Example: Apply Function](../lecture/example/mv05_cond_indep03_apply.Rmd)
 
