@@ -1,0 +1,461 @@
+---
+title: "A Detailed Example of Ethnicity Prediction"
+author: "Le Wang"
+output:
+  beamer_presentation: default
+  ioslides_presentation: default
+  slidy_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = '/Users/lewang/Dropbox/02\ teaching/econ5043/02lectures/lecture2')
+cnames<-read.csv("data/cnames.csv")
+FLvoters<-read.csv("data/FLvoters.csv")
+FLcensus<-read.csv("data/FLCensusVTD.csv")
+dim(FLvoters)
+FLvoters <- FLvoters[!is.na(match(FLvoters$surname,cnames$surname)),]
+FLvoters<-na.omit(FLvoters)
+cnames$pctothers<-100-(cnames$pctapi+cnames$pctblack+cnames$pctwhite+cnames$pcthispanic)
+```
+
+
+## Our problem
+
+We would like to predict a voter's race. What is our procedure?
+
+\pause
+Step 1. Figure out the distribution
+
+$$
+\Pr[\text{Race}]
+$$
+
+\pause
+
+$$
+\begin{aligned}
+& \Pr[\text{Race = white}], \Pr[\text{Race = black}], \Pr[\text{Race = hispanic}] \\
+& \Pr[\text{Race = asian}], \Pr[\text{Race = others}]
+\end{aligned}
+$$
+
+\pause 
+Step 2. Pick the most likely value, in this case, always **white**
+
+
+## More information
+
+Now, suppose that I tell you this voter's last name is PIEDRA, what is your prediction for this person's race?
+
+\pause
+Step 1. Figure out the conditional distribution, i.e., the distribution for this subgroup
+
+$$
+\Pr[\text{Race} \mid \text{Surname}]
+$$
+
+\pause
+In this specific case:
+$$
+\begin{aligned}
+& \Pr[\text{race} = \text{white} & \mid \text{surname} = \text{PIEDRA}] \\
+& \Pr[\text{race} = \text{black} & \mid \text{surname} = \text{PIEDRA}] \\
+& \Pr[\text{race} = \text{hispanic} & \mid \text{surname} = \text{PIEDRA}] \\
+& \Pr[\text{race} = \text{asian} & \mid \text{surname} = \text{PIEDRA}] \\
+& \Pr[\text{race} = \text{others} & \mid \text{surname} = \text{PIEDRA}]
+\end{aligned}
+$$
+\pause 
+Step 2. Pick the most likely value and use it as our prediction. 
+
+
+## How to do it?
+
+```{r}
+head(FLvoters)
+```
+
+---
+
+```{r}
+subset <- subset(FLvoters, surname == "PIEDRA")
+prop.table(table(subset$race))
+```
+
+---
+
+But in practice, if we do not have such information but have access to the census names data, what should we do?
+
+```{r}
+subset <- subset(cnames, surname == "PIEDRA")
+subset
+```
+
+## How to evaluate our results?
+
+For the white sample, we know that 
+
+$$
+\begin{aligned}
+& \Pr[\text{race} = \text{white} & \mid \text{surname} = \text{PIEDRA}] \\
+& \Pr[\text{race} = \text{black} & \mid \text{surname} = \text{PIEDRA}] \\
+& \Pr[\text{race} = \text{hispanic} & \mid \text{surname} = \text{PIEDRA}] \\
+& \Pr[\text{race} = \text{asian} & \mid \text{surname} = \text{PIEDRA}] \\
+& \Pr[\text{race} = \text{others} & \mid \text{surname} = \text{PIEDRA}]
+\end{aligned}
+$$
+
+$$
+\max(\cdots) = \Pr[\text{race} = \text{white}  \mid \text{surname} = \text{PIEDRA}]
+$$
+
+---
+
+```{r, size='tiny'}
+subset
+max(subset[, c("pctwhite","pctblack","pctapi","pctaian","pct2prace","pcthispanic")])
+```
+
+```{r, size='tiny'}
+max(subset[, c("pctwhite","pctblack","pctapi","pctaian","pct2prace","pcthispanic")]) == subset$pctwhite
+```
+
+
+## Further Information
+
+What if I tell you one more piece of information that this voter's last name is PIEDRA living in county 115 and VTD 66
+
+
+\pause
+Step 1. Figure out the conditional distribution, i.e., the distribution for this subgroup
+
+$$
+\Pr[\text{Race} \mid \text{Surname, County, VTD}]
+$$
+
+\pause
+In this specific case:
+$$
+\begin{aligned}
+& \Pr[\text{race} = \text{white} & \mid \text{surname} = \text{PIEDRA}, \text{county = 115, VTD = 66}] \\
+& \Pr[\text{race} = \text{black} & \mid \text{surname} = \text{PIEDRA}, \text{county = 115, VTD = 66}] \\
+& \Pr[\text{race} = \text{hispanic} & \mid \text{surname} = \text{PIEDRA}, \text{county = 115, VTD = 66}] \\
+& \Pr[\text{race} = \text{asian} & \mid \text{surname} = \text{PIEDRA}, \text{county = 115, VTD = 66}] \\
+& \Pr[\text{race} = \text{others} & \mid \text{surname} = \text{PIEDRA}, \text{county = 115, VTD = 66}]
+\end{aligned}
+$$
+\pause 
+Step 2. Pick the most likely value and use it as our prediction. 
+
+
+---
+
+```{r}
+subset <- subset(FLvoters, surname == "PIEDRA" & county == 115 & VTD == 66)
+prop.table(table(subset$race))
+```
+
+---
+
+What if this dataset is not available? We have access to only census names data and Florida census data?
+
+```{r}
+head(cnames)
+```
+
+```{r}
+head(FLcensus)
+```
+
+## Lets piece together information from two different datasets
+
+$$
+\begin{aligned}
+& \Pr[\text{race}|\text{surname,residence}]\\
+& =\frac{\Pr[\text{surname}|\text{race,residence}]\Pr[\text{race}|\text{residence}]}{\Pr[\text{surname}|\text{residence}]}
+\end{aligned}
+$$
+
+\pause
+
+$$
+\begin{aligned}
+&\Pr[\text{race} = \text{white}|\text{surname= PEIDRA,county=115, VTD=66}]\\
+& =\frac{\overbrace{\Pr[\text{surname=PIEDRA}\mid \text{race=white,county=115, VTD=66}]}^{\textbf{Term A}} }{\underbrace{\Pr[\text{surname=PIEDRA}|\text{county=115, VTD=66}]}_{\textbf{Term C}}} \\
+& \cdot \overbrace{\Pr[\text{race=white}|\text{county=115, VTD=66}]}^{\textbf{Term B}}
+\end{aligned}
+$$
+
+## Term B
+
+```{r}
+subset <- subset(FLcensus, county == 115 & VTD == 66)
+subset
+```
+
+
+```{r}
+B <- subset[,"white"]
+```
+
+---
+
+Let me also calculate this for other races
+
+```{r}
+B.black <- subset[,"black"]
+B.hisp <- subset[,"hispanic"]
+B.api <- subset[,"api"]
+B.others <- subset[,"others"]
+```
+
+---
+
+$$
+\begin{aligned}
+&\Pr[\text{race} = \text{white}|\text{surname= PEIDRA,county=115, VTD=66}]\\
+& =\frac{\overbrace{\Pr[\text{surname=PIEDRA}\mid \text{race=white,county=115, VTD=66}]}^{\textbf{Term A}} }{\underbrace{\Pr[\text{surname=PIEDRA}|\text{county=115, VTD=66}]}_{\textbf{Term C}}} \\
+& \cdot \overbrace{\Pr[\text{race=white}|\text{county=115, VTD=66}]}^{\textbf{Term B}}
+\end{aligned}
+$$
+
+---
+
+$$
+\tiny
+\begin{aligned}
+& \Pr[\text{surname=PIEDRA}|\text{county=115, VTD=66}] \\
+&= \Pr[\text{surname=PIEDRA}\mid \text{race=white,county=115, VTD=66}] \cdot \Pr[ \text{race=white}\mid \text{county=115, VTD=66}] \\
+& + \Pr[\text{surname=PIEDRA}\mid \text{race=black,county=115, VTD=66}] \cdot \Pr[ \text{race=black}\mid \text{county=115, VTD=66}] \\
+& + \Pr[\text{surname=PIEDRA}\mid \text{race=hispanic,county=115, VTD=66}] \cdot \Pr[ \text{race=hispanic}\mid \text{county=115, VTD=66}] \\
+& + \Pr[\text{surname=PIEDRA}\mid \text{race=asisan,county=115, VTD=66}] \cdot \Pr[ \text{race=asian}\mid \text{county=115, VTD=66}] \\
+& + \Pr[\text{surname=PIEDRA}\mid \text{race=others,county=115, VTD=66}] \cdot \Pr[ \text{race=others}\mid \text{county=115, VTD=66}] \\
+\end{aligned}
+$$
+
+## Term A
+
+This is my **Term A**:
+
+$$
+\Pr[\text{surname=PIEDRA}\mid \text{race=white,county=115, VTD=66}]
+$$
+\pause
+I will make the following **conditional independence assumption**
+
+$$
+\begin{aligned}
+& \Pr[\text{surname=PIEDRA}\mid \text{race=white,county=115, VTD=66}]\\
+& = \Pr[\text{surname=PIEDRA}\mid \text{race=white}]
+\end{aligned}
+$$
+
+---
+
+Or similarly for every other racial category
+
+$$
+\begin{aligned}
+& \Pr[\text{surname=PIEDRA}\mid \text{race=black,county=115, VTD=66}]\\
+& = \Pr[\text{surname=PIEDRA}\mid \text{race=black}]
+\end{aligned}
+$$
+
+---
+
+In general 
+
+$$
+\Pr[\text{surname} \mid \text{race, residence}]=\Pr[\text{surname}\mid \text{race}]
+$$
+
+
+Does it make sense? Or, when will it be violated? 
+
+\pause 
+
+Conditional independence implies that once we know a voter's race, her residence location does not give us any additional information about her surname. 
+
+\pause 
+There is NO strong geographical concentration of certain surnames in Florida within a racial categroy. This will certainly be violated in the Chinese context. 
+
+---
+
+$$
+\begin{aligned}
+& \Pr[\text{surname=PIEDRA}\mid \text{race=white,county=115, VTD=66}]\\
+& = \Pr[\text{surname=PIEDRA}\mid \text{race=white}] \\
+\end{aligned}
+$$
+
+---
+
+$$
+\begin{aligned}
+&\Pr[\text{race} = \text{white}|\text{surname= PEIDRA,county=115, VTD=66}]\\
+& =\frac{\overbrace{\alt<2->{\Pr[\text{surname=PIEDRA}\mid \text{race=white}]}{\Pr[\text{surname=PIEDRA}\mid \text{race=white,county=115, VTD=66}]}}^{\textbf{Term A}} }{\underbrace{\Pr[\text{surname=PIEDRA}|\text{county=115, VTD=66}]}_{\textbf{Term C}}} \\
+& \cdot \overbrace{\Pr[\text{race=white}|\text{county=115, VTD=66}]}^{\textbf{Term B}}
+\end{aligned}
+$$
+
+---
+
+Where do we have this information?
+\pause
+
+$$
+\begin{aligned}
+& \Pr[\text{surname=PIEDRA}\mid \text{race=white}]  \\
+\pause 
+& = \frac{\overbrace{\Pr[\text{race=white}\mid \text{surname = PIEDRA}]}^{\textbf{Term A.1}}}{\underbrace{\Pr[\text{race = white}]}_{\textbf{Term A.2}}} \cdot \overbrace{\Pr[\text{surname=PIEDRA}]}^{\textbf{Term A.3}}
+\end{aligned}
+$$
+
+---
+
+```{r}
+A.1 <- cnames[which(cnames$surname=="PIEDRA"), "pctwhite"]/100
+A.1
+```
+
+---
+
+$$
+\begin{aligned}
+& \Pr[\text{surname=PIEDRA}\mid \text{race=white}]  \\
+\pause 
+& = \frac{\overbrace{\Pr[\text{race=white}\mid \text{surname = PIEDRA}]}^{\textbf{Term A.1}}}{\underbrace{\Pr[\text{race = white}]}_{\textbf{Term A.2}}} \cdot \overbrace{\Pr[\text{surname=PIEDRA}]}^{\textbf{Term A.3}}
+\end{aligned}
+$$
+
+## Term A.2
+
+```{r}
+head(FLcensus)
+```
+
+
+```{r}
+race.prop <- apply(FLcensus[,c("white", "black", "api", "hispanic", "others")], 
+					2, 
+					weighted.mean, 
+					weights = FLCensus$total.pop)
+A.2 <- race.prop["white"]
+A.2
+```
+
+---
+
+$$
+\begin{aligned}
+& \Pr[\text{surname=PIEDRA}\mid \text{race=white}]  \\
+\pause 
+& = \frac{\overbrace{\Pr[\text{race=white}\mid \text{surname = PIEDRA}]}^{\textbf{Term A.1}}}{\underbrace{\Pr[\text{race = white}]}_{\textbf{Term A.2}}} \cdot \overbrace{\Pr[\text{surname=PIEDRA}]}^{\textbf{Term A.3}}
+\end{aligned}
+$$
+
+## Term A.3
+
+```{r}
+head(cnames)
+
+```
+
+---
+
+```{r}
+total.count<- sum(cnames$count)
+A.3 <- cnames[which(cnames$surname == "PIEDRA"),"count"]/total.count
+```
+
+
+
+## Term A
+
+```{r}
+A <- A.1*A.3/A.2
+A
+```
+
+
+---
+
+Repeat this process for all other racial groups
+
+```{r}
+A.1.black <- cnames[which(cnames$surname=="PIEDRA"), "pctblack"]/100
+A.1.hisp <- cnames[which(cnames$surname=="PIEDRA"), "pcthispanic"]/100
+A.1.api <- cnames[which(cnames$surname=="PIEDRA"), "pctapi"]/100
+A.1.others <- cnames[which(cnames$surname=="PIEDRA"), "pctothers"]/100
+
+A.2.black <- race.prop["black"]
+A.2.hisp <- race.prop["hispanic"]
+A.2.api <- race.prop["api"]
+A.2.others <- race.prop["others"]
+
+A.black <- A.1.black*A.3/A.2.black
+A.hisp <- A.1.hisp*A.3/A.2.hisp
+A.api <- A.1.api*A.3/A.2.api
+A.others <- A.1.others*A.3/A.2.others
+
+
+A.black
+A.hisp
+A.api
+A.others
+```
+
+---
+
+$$
+\begin{aligned}
+&\Pr[\text{race} = \text{white}|\text{surname= PEIDRA,county=115, VTD=66}]\\
+& =\frac{\overbrace{\Pr[\text{surname=PIEDRA}\mid \text{race=white,county=115, VTD=66}]}^{\textbf{Term A}} }{\underbrace{\Pr[\text{surname=PIEDRA}|\text{county=115, VTD=66}]}_{\textbf{Term C}}} \\
+& \cdot \overbrace{\Pr[\text{race=white}|\text{county=115, VTD=66}]}^{\textbf{Term B}}
+\end{aligned}
+$$
+
+## Term C
+
+$$
+\tiny
+\begin{aligned}
+& \Pr[\text{surname=PIEDRA}|\text{county=115, VTD=66}] \\
+&= \Pr[\text{surname=PIEDRA}\mid \text{race=white,county=115, VTD=66}] \cdot \Pr[ \text{race=white}\mid \text{county=115, VTD=66}] \\
+& + \Pr[\text{surname=PIEDRA}\mid \text{race=black,county=115, VTD=66}] \cdot \Pr[ \text{race=black}\mid \text{county=115, VTD=66}] \\
+& + \Pr[\text{surname=PIEDRA}\mid \text{race=hispanic,county=115, VTD=66}] \cdot \Pr[ \text{race=hispanic}\mid \text{county=115, VTD=66}] \\
+& + \Pr[\text{surname=PIEDRA}\mid \text{race=asisan,county=115, VTD=66}] \cdot \Pr[ \text{race=asian}\mid \text{county=115, VTD=66}] \\
+& + \Pr[\text{surname=PIEDRA}\mid \text{race=others,county=115, VTD=66}] \cdot \Pr[ \text{race=others}\mid \text{county=115, VTD=66}] \\
+\end{aligned}
+$$
+
+---
+
+```{r}
+residence <- subset(FLcensus, county== 115 & VTD ==66)
+residence
+```
+
+---
+
+```{r}
+C <- A*residence["white"] + A.black*residence["black"] + A.hisp*residence["hispanic"]+ A.api*residence["api"]+A.others*residence["others"] 
+C
+```
+
+---
+
+```{r}
+A*B/C
+```
+
+
+
+---
+
+```{r}
+cond.prob <- c(A*B/C, A.black*B.black/C, A.hisp*B.hisp/C, A.api*B.api/C, A.others*B.others/C)
+names(cond.prob) <- c("white", "black", "hispanic", "api", "others")
+cond.prob
+```

@@ -22,6 +22,7 @@
 
 1. Slides: [here](../lecture/mv03_cond_dist04.pdf)
 2. Slides: [Tutorials on Bayes and Naive Bayes Classifiers](../lecture/mv03_cond_dist04_tutorial_on_naive-bayes.pdf)
+3. Slides: [Tutorials on Bayes and Naive Bayes Classifiers](../lecture/mv03_cond_dist04_tutorial_on_race_prediction.pdf); [R markdown file](mv03_cond_dist04_tutorial_on_race_prediction.Rmd); [R code](../lecture/example/mv05_cond_indep02_detailed_example.Rmd)
 
 ### R code
 
